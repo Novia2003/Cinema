@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clients</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+</div>
+<div>
+    <form method="post">
+        <input type="text" name="name" placeholder="Enter a name"/>
+        <input type="date" name="birthdate" placeholder="Enter date of birth"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<div>
+    <form action="/client" method="get">
+        <label for="search">Поиск клиентов по имени:</label>
+        <input type="text" id="search" name="search" placeholder="Введите имя" th:value="${search}">
+        <input type="submit" value="Поиск">
+    </form>
+</div>
+<table id="myTable">
+    <tr>
+        <th>Name</th>
+        <th>Birthdate</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.getName()}"></td>
+        <td th:text="${client.getBirthdate()}"></td>
+        <td>
+            <a th:href="@{'client/update/' + ${client.getIdClient()}}" th:text="Edit"/>
+        </td>
+        <td>
+            <a th:href="@{'client/delete/' + ${client.getIdClient()}}" th:text="Delete"/>
+        </td>
+        <td th:text="${client.getIdClient()}" hidden></td>
+    </tr>
+</table>
+
+<div th:if="${totalPages > 1}">
+    <ul class="pagination">
+        <li th:if="${currentPage > 1}">
+            <a th:href="@{'/client?page=' + (${currentPage - 1}) + '&size=' + ${size} + '&search=' + ${search}}">Previous</a>
+        </li>
+        <li th:if="${currentPage < totalPages}">
+            <a th:href="@{'/client?page=' + (${currentPage + 1}) + '&size=' + ${size} + '&search=' + ${search}}">Next</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Halls</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+</div>
+<div>
+    <form method="post">
+        <input type="number" name="numberRows" placeholder="Количество рядов"/>
+        <input type="number" name="numberSeatsInRow" placeholder="Количество мест в ряду" />
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<table id="myTable">
+    <tr>
+        <th>Hall number</th>
+        <th>Number of rows</th>
+        <th>Number of seats in row</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+    <br>
+    <tr th:each="hall : ${halls}">
+        <td th:text="${hall.getHallNumber()}"></td>
+        <td th:text="${hall.getNumberRows()}"></td>
+        <td th:text="${hall.getNumberSeatsInRow()}"></td>
+        <td>
+            <a th:href="@{'hall/update/' + ${hall.getHallNumber()}}" th:text="Edit" />
+        </td>
+        <td>
+            <a th:href="@{'hall/delete/' + ${hall.getHallNumber()}}" th:text="Delete" />
+        </td>
+    </tr>
+</table>
+</body>
+</html>

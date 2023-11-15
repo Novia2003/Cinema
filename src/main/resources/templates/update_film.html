@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Edit Film</title>>
+</head>
+<body>
+<div>
+  <a th:href="@{'/client'}" th:text="Clients"/>
+  <a th:href="@{'/film'}" th:text="Films"/>
+  <a th:href="@{'/hall'}" th:text="Halls"/>
+</div>
+<form action="#" th:action="@{/film/save}" th:object="${film}"
+      method="POST">
+  <input type="hidden" th:field="*{idFilm}"/>
+  <div>
+    <label for="filmName">Name:</label>
+    <input type="text" id="filmName" th:field="*{filmName}" placeholder="Film name">
+  </div>
+  <div>
+    <label for="ageRestriction">Age restriction:</label>
+    <input type="number" id="ageRestriction" th:field="*{ageRestriction}" placeholder="Age restriction">
+  </div>
+  <div>
+    <label for="duration">Duration:</label>
+    <input type="number" id="duration" th:field="*{duration}" placeholder="Film duration">
+  </div>
+  <div>
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" th:field="*{genre}" placeholder="Film genre">
+  </div>
+  <button type="submit">Update Film</button>
+</form>
+
+<hr>
+
+<a th:href="@{/film}">Back to Films</a>
+</body>
+</html>

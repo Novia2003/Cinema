@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Edit Client</title>
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+</div>
+<form action="#" th:action="@{/client/save}" th:object="${client}"
+      method="POST">
+    <input type="hidden" th:field="*{idClient}"/>
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" placeholder="Client name">
+    </div>
+    <div>
+        <label for="birthdate">Birthdate:</label>
+        <input type="date" id="birthdate" th:field="*{birthdate}" placeholder="Client birthdate">
+    </div>
+    <button type="submit">Update Client</button>
+</form>
+
+<hr>
+
+<a th:href="@{/client}">Back to Client List</a>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Films</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+</div>
+<div>
+    <form method="post">
+        <input type="text" name="name" placeholder="Введите название фильма" />
+        <input type="number" name="ageRestriction" placeholder="Age restriction">
+        <input type="number" name="duration" placeholder="Film duration">
+        <input type="text" name="genre" placeholder="Film genre">
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<input type="text" id="inputNameSort" onkeyup="myFunction()" placeholder="Поиск по имени фильма">
+<table id="myTable">
+    <tr>
+        <th>Name</th>
+        <th>Age restriction</th>
+        <th>Duration</th>
+        <th>Genre</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+    <tr th:each="film : ${films}">
+        <td th:text="${film.getFilmName()}"></td>
+        <td th:text="${film.getAgeRestriction()}"></td>
+        <td th:text="${film.getDuration()}"></td>
+        <td th:text="${film.getGenre()}"></td>
+        <td>
+            <a th:href="@{'film/update/' + ${film.getIdFilm()}}" th:text="Edit" />
+        </td>
+        <td>
+            <a th:href="@{'film/delete/' + ${film.getIdFilm()}}" th:text="Delete" />
+        </td>
+        <td th:text="${film.getIdFilm()}" hidden>
+
+        </td>
+    </tr>
+</table>
+<script>
+    function myFunction() {
+        // Объявить переменные
+        var nameInput, nameFilter, table, tr, td, i, txtValue;
+        nameInput = document.getElementById("inputNameSort");
+        nameFilter = nameInput.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(nameFilter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+<!--<span>-->
+<!--    <button id="prevButton">Previous</button>-->
+<!--    <span id="pageNumberInfo"></span>-->
+<!--    <button id="nextButton">Next</button>-->
+<!--</span>-->
+<!--<script>-->
+<!--    var data = [];-->
+<!--    let table = document.querySelector('#myTable');-->
+<!--    window.onload = (event) => {-->
+<!--        data = table_to_array("myTable");-->
+<!--        renderTable();-->
+<!--    };-->
+
+<!--    function filterListByQuery() {-->
+<!--        let nameInput, nameFilter;-->
+<!--        nameInput = document.getElementById("inputNameSort");-->
+<!--        nameFilter = nameInput.value.toUpperCase();-->
+
+
+<!--        return data.filter(c => c[0].toUpperCase().indexOf(nameFilter) > -1)-->
+<!--    }-->
+
+<!--    const pageSize = 10;-->
+<!--    let curPage = 1;-->
+<!--    const info = document.getElementById("pageNumberInfo")-->
+
+<!--    function table_to_array(table_id) {-->
+<!--        myData = document.getElementById(table_id).rows-->
+<!--        //console.log(myData)-->
+<!--        my_liste = []-->
+<!--        for (var i = 1; i < myData.length; i++) {-->
+<!--            el = myData[i].children-->
+<!--            my_el = []-->
+<!--            for (var j = 0; j < el.length; j++) {-->
+<!--                if(j < 4 || j === 6)-->
+<!--                    my_el.push(el[j].innerText);-->
+<!--            }-->
+<!--            my_liste.push(my_el)-->
+
+<!--        }-->
+<!--        return my_liste-->
+<!--    }-->
+
+<!--    document.querySelector('#nextButton').addEventListener('click', nextPage, false);-->
+<!--    document.querySelector('#prevButton').addEventListener('click', previousPage, false);-->
+
+<!--    function previousPage() {-->
+<!--        if(curPage > 1) {-->
+<!--            curPage&#45;&#45;;-->
+<!--        }-->
+<!--        renderTable();-->
+<!--    }-->
+
+<!--    function nextPage() {-->
+<!--        let result = filterListByQuery().length-->
+<!--        if(result === 0) info.innerText = "Нет вариантов"-->
+<!--        if((curPage * pageSize) < filterListByQuery().length) {-->
+<!--            curPage++;-->
+<!--        }-->
+<!--        renderTable();-->
+<!--    }-->
+
+<!--    function renderTable() {-->
+<!--        // create html-->
+<!--        let result = '';-->
+<!--        filterListByQuery().filter((row, index) => {-->
+<!--            let start = (curPage-1)*pageSize;-->
+<!--            let end =curPage*pageSize;-->
+<!--            if(index >= start && index < end) return true;-->
+<!--        }).forEach(c => {-->
+<!--            result += `<tr>-->
+<!--            <td>${c[0]}</td>-->
+<!--            <td>${c[1]}</td>-->
+<!--            <td>${c[2]}</td>-->
+<!--            <td>${c[3]}</td>-->
+<!--            <td><a href="film/update/${c[4]}" >Edit</a></td>-->
+<!--            <td><a href="film/delete/${c[4]}" >Delete</a></td>-->
+<!--            </tr>`;-->
+<!--        });-->
+<!--        table.innerHTML = result;-->
+
+<!--        let length = filterListByQuery().length-->
+<!--        if(length === 0) info.innerText = "Нет вариантов"-->
+<!--        else info.innerText = "" + curPage-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>

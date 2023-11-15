@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Edit Hall</title>
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+</div>
+<form action="#" th:action="@{/hall/save}" th:object="${hall}"
+      method="POST">
+    <input type="hidden" th:field="*{hallNumber}"/>
+    <div>
+        <label for="numberRows">Number of Rows:</label>
+        <input type="text" id="numberRows" th:field="*{numberRows}" placeholder="Number of rows">
+    </div>
+    <div>
+        <label for="numberSeatsInRow">Number of seats in row:</label>
+        <input type="number" id="numberSeatsInRow" th:field="*{numberSeatsInRow}" placeholder="Number of seats in row">
+    </div>
+    <button type="submit">Update Hall</button>
+</form>
+
+<hr>
+
+<a th:href="@{/hall}">Back to Halls</a>
+</body>
+</html>
