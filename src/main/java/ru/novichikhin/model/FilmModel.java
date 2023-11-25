@@ -1,6 +1,8 @@
 package ru.novichikhin.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Time;
 import java.util.Collection;
@@ -25,7 +27,7 @@ public class FilmModel {
     @Basic
     @Column(name = "genre", nullable = false, length = 30)
     private String genre;
-    @OneToMany(mappedBy = "filmByFilmId")
+    @OneToMany(mappedBy = "filmById")
     private Collection<FilmSessionModel> filmSessionsByIdFilm;
 
     public int getIdFilm() {

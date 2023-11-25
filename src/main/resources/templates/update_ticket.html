@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit ticket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+    <a th:href="@{'/film_session'}" th:text="Film_sessions"/>
+    <a th:href="@{'/ticket'}" th:text="Ticket"/>
+    <a th:href="@{'/popularity'}" th:text="Popularity"/>
+</div>
+<div>
+    <form action="#" th:action="@{/ticket/save}" th:object="${ticket}"
+          method="POST">
+        <input type="hidden" th:field="*{idTicket}"/>
+        <table>
+            <tr>
+                <td><b>Film sessions:</b></td>
+                <td>
+                    <select th:field="*{sessionById}">
+                        <option th:each="filmSession : ${filmsSessions}" th:value="${filmSession.getIdSession()}"
+                                th:text="${filmSession.getFilmById().getFilmName()} + ' ' + ${filmSession.getStartTime()}"></option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td><b>Clients:</b></td>
+                <td>
+                    <select th:field="*{clientById}">
+                        <option th:each="client : ${clients}" th:value="${client.getIdClient()}"
+                                th:text="${client.getName()} + ' ' + ${client.getBirthdate()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Row number:</b></td>
+                <td>
+                    <input type="number" th:field="*{lineNumber}" placeholder="Enter the row number"/>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Seat number:</b></td>
+                <td>
+                    <input type="number" th:field="*{seatNumber}" placeholder="Enter the seat number"/>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Update ticket"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<hr>
+
+<a th:href="@{/ticket}">Back to tickets</a>
+</body>
+</html>

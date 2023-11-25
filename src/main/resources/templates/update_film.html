@@ -2,13 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="ISO-8859-1">
-  <title>Edit Film</title>>
+  <title>Edit Film</title>
 </head>
 <body>
 <div>
   <a th:href="@{'/client'}" th:text="Clients"/>
   <a th:href="@{'/film'}" th:text="Films"/>
   <a th:href="@{'/hall'}" th:text="Halls"/>
+  <a th:href="@{'/film_session'}" th:text="Film_sessions"/>
+  <a th:href="@{'/ticket'}" th:text="Ticket"/>
+  <a th:href="@{'/popularity'}" th:text="Popularity"/>
 </div>
 <form action="#" th:action="@{/film/save}" th:object="${film}"
       method="POST">

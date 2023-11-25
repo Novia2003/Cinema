@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ticket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+    <a th:href="@{'/film_session'}" th:text="Film_sessions"/>
+    <a th:href="@{'/ticket'}" th:text="Ticket"/>
+    <a th:href="@{'/popularity'}" th:text="Popularity"/>
+</div>
+<div>
+    <form method="post" th:object="${ticket}">
+        <table>
+            <tr>
+                <td><b>Film sessions:</b></td>
+                <td>
+                    <select th:field="*{sessionById}">
+                        <option th:each="filmSession : ${filmsSessions}" th:value="${filmSession.getIdSession()}"
+                                th:text="${filmSession.getFilmById().getFilmName()} + ' ' + ${filmSession.getStartTime()}"></option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td><b>Clients:</b></td>
+                <td>
+                    <select th:field="*{clientById}">
+                        <option th:each="client : ${clients}" th:value="${client.getIdClient()}"
+                                th:text="${client.getName()} + ' ' + ${client.getBirthdate()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Row number:</b></td>
+                <td>
+                    <input type="number" th:field="*{lineNumber}" placeholder="Enter the row number" />
+                </td>
+            </tr>
+            <tr>
+                <td><b>Seat number:</b></td>
+                <td>
+                    <input type="number" th:field="*{seatNumber}" placeholder="Enter the seat number" />
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Add"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<input type="text" id="inputNameSort" onkeyup="myFunction()" placeholder="Search by film name">
+<table id="myTable">
+    <tr>
+        <th>Film sessions</th>
+        <th>Clients</th>
+        <th>Row number</th>
+        <th>Seat number</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+    <tr th:each="currentTicket: ${tickets}">
+        <td th:text="${currentTicket.getSessionById().getFilmById().getFilmName()} + ' '
+        + ${currentTicket.getSessionById().getStartTime()}"></td>
+        <td th:text="${currentTicket.getClientById().getName() + ' ' + currentTicket.getClientById().getBirthdate()}"></td>
+        <td th:text="${currentTicket.getLineNumber()}"></td>
+        <td th:text="${currentTicket.getSeatNumber()}"></td>
+        <td>
+            <a th:href="@{'ticket/update/' + ${currentTicket.getIdTicket()}}" th:text="Edit" />
+        </td>
+        <td>
+            <a th:href="@{'ticket/delete/' + ${currentTicket.getIdTicket()}}" th:text="Delete" />
+        </td>
+    </tr>
+</table>
+<script>
+    function myFunction() {
+        // Объявить переменные
+        var nameInput, unitsInput, nameFilter, table, tr, td, i, txtValue;
+        nameInput = document.getElementById("inputNameSort");
+        nameFilter = nameInput.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(nameFilter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

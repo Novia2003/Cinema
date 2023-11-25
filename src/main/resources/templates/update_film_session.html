@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Edit film session</title>
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+    <a th:href="@{'/film_session'}" th:text="Film_sessions"/>
+    <a th:href="@{'/ticket'}" th:text="Ticket"/>
+    <a th:href="@{'/popularity'}" th:text="Popularity"/>
+</div>
+<div>
+    <form action="#" th:action="@{/film_session/save}" th:object="${filmSession}"
+          method="POST">
+        <input type="hidden" th:field="*{idSession}"/>
+
+        <table>
+            <tr>
+                <td><b>Film:</b></td>
+                <td>
+                    <select th:field="*{filmById}">
+                        <option th:each="film : ${films}" th:value="${film.getIdFilm()}"
+                                th:text="${film.getFilmName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Hall:</b></td>
+                <td>
+                    <select th:field="*{hallById}">
+                        <option th:each="hall : ${halls}" th:value="${hall.getHallNumber()}"
+                                th:text="${hall.getHallNumber()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Price:</b></td>
+                <td>
+                    <input type="number" th:field="*{price}" placeholder="Enter the price"/>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Session start:</b></td>
+                <td>
+                    <input type="datetime-local" th:field="*{startTime}" th:value="*{startTime}" pattern = "yyyy-MM-dd'T'HH:mm"/>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Update film session"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<hr>
+
+<a th:href="@{/film_session}">Back to film sessions</a>
+</body>
+</html>

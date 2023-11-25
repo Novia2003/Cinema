@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Film sessions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <a th:href="@{'/client'}" th:text="Clients"/>
+    <a th:href="@{'/film'}" th:text="Films"/>
+    <a th:href="@{'/hall'}" th:text="Halls"/>
+    <a th:href="@{'/film_session'}" th:text="Film_sessions"/>
+    <a th:href="@{'/ticket'}" th:text="Ticket"/>
+    <a th:href="@{'/popularity'}" th:text="Popularity"/>
+</div>
+<div>
+    <form method="post" th:object="${filmSession}">
+        <table>
+            <tr>
+                <td><b>Film:</b></td>
+                <td>
+                    <select th:field="*{filmById}">
+                        <option th:each="film : ${films}" th:value="${film.getIdFilm()}" th:text="${film.getFilmName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Hall:</b></td>
+                <td>
+                    <select th:field="*{hallById}">
+                        <option th:each="hall : ${halls}" th:value="${hall.getHallNumber()}" th:text="${hall.getHallNumber()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Price:</b></td>
+                <td>
+                    <input type="number" th:field="*{price}" placeholder="Enter the price" />
+                </td>
+            </tr>
+            <tr>
+                <td><b>Session start:</b></td>
+                <td>
+                    <input type="datetime-local" th:field="*{startTime}" placeholder="Enter the start of the session" />
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Add"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<input type="text" id="inputNameSort" onkeyup="myFunction()" placeholder="Search by film name">
+<table id="myTable">
+    <tr>
+        <th>Film</th>
+        <th>Hall</th>
+        <th>Price</th>
+        <th>Session start</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+    <tr th:each="currentSession : ${filmSessions}">
+        <td th:text="${currentSession.getFilmById().getFilmName()}"></td>
+        <td th:text="${currentSession.getHallById().getHallNumber()}"></td>
+        <td th:text="${currentSession.getPrice()}"></td>
+        <td th:text="${currentSession.getStartTime()}"></td>
+        <td>
+            <a th:href="@{'film_session/update/' + ${currentSession.getIdSession()}}" th:text="Edit" />
+        </td>
+        <td>
+            <a th:href="@{'film_session/delete/' + ${currentSession.getIdSession()}}" th:text="Delete" />
+        </td>
+    </tr>
+</table>
+<script>
+    function myFunction() {
+        // Объявить переменные
+        var nameInput, unitsInput, nameFilter, table, tr, td, i, txtValue;
+        nameInput = document.getElementById("inputNameSort");
+        nameFilter = nameInput.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(nameFilter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,6 +1,8 @@
 package ru.novichikhin.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -18,7 +20,7 @@ public class HallModel {
     @Basic
     @Column(name = "number_seats_in_row", nullable = true)
     private Integer numberSeatsInRow;
-    @OneToMany(mappedBy = "hallByHallId")
+    @OneToMany(mappedBy = "hallById")
     private Collection<FilmSessionModel> filmSessionsByHallNumber;
 
     public int getHallNumber() {

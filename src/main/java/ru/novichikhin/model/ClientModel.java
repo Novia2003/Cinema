@@ -1,6 +1,8 @@
 package ru.novichikhin.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -19,7 +21,7 @@ public class ClientModel {
     @Basic
     @Column(name = "birthdate", nullable = true)
     private Date birthdate;
-    @OneToMany(mappedBy = "clientByClientId")
+    @OneToMany(mappedBy = "clientById")
     private Collection<TicketModel> ticketsByIdClient;
 
     public int getIdClient() {
